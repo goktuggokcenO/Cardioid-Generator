@@ -40,19 +40,32 @@ class Cardioid:
             self.app.screen.get_width() // 2,
             self.app.screen.get_height() // 2,
         )
+        self.counter = 0
+        self.inc = 0.01
 
     # Draw method.
     def draw(self):
+        time = pg.time.get_ticks()
+        self.radius = 250 + 50 * abs(math.sin(time * 0.004) - 0.5)
+        factor = 1 + 0.001 * time
+
+        # Draw the cardioid.
         for i in range(self.num_points):
             theta = (2 * math.pi / self.num_points) * i
 
             x1 = int(self.radius * math.cos(theta)) + self.translate[0]
             y1 = int(self.radius * math.sin(theta)) + self.translate[1]
+            x2 = int(self.radius * math.cos(factor * theta)) + self.translate[0]
+            y2 = int(self.radius * math.sin(factor * theta)) + self.translate[1]
+            pg.draw.line(self.app.screen, self.get_color(), (x1, y1), (x2, y2))
 
-            x2 = int(self.radius * math.cos(2 * theta)) + self.translate[0]
-            y2 = int(self.radius * math.sin(2 * theta)) + self.translate[1]
-
-            pg.draw.line(self.app.screen, "green", (x1, y1), (x2, y2))
+    # Get color method.
+    def get_color(self):
+        self.counter += self.inc
+        if not (0 < self.counter < 1):
+            self.counter = max(min(self.counter, 1), 0)
+            self.inc *= -1
+        return pg.Color("red").lerp("green", self.counter)
 
 
 # Check if the file is being run directly.
