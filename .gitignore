@@ -1,1 +1,5 @@
 .vscode/settings.json
+src/__pycache__/app.cpython-312.pyc
+src/__pycache__/cardioid.cpython-312.pyc
+src/__pycache__/slider.cpython-312.pyc
+src/__pycache__/ui.cpython-312.pyc
