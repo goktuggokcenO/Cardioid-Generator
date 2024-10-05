@@ -43,6 +43,19 @@ class Cardioid:
         self.counter = 0
         self.inc = 0.01
 
+    # Update settings based on slider values.
+    def update_settings(self, radius, num_points):
+        self.radius = radius
+        self.num_points = int(num_points)
+
+    # Update window size and adjust cardioid position and radius.
+    def update_window_size(self, width, height):
+        # Keep the cardioid centered
+        self.translate = (width // 2, height // 2)
+
+        # Adjust the radius based on the smaller dimension (width or height)
+        self.radius = min(width, height) // 2 - 50
+
     # Draw method.
     def draw(self):
         time = pg.time.get_ticks()
