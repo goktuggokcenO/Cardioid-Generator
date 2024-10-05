@@ -59,8 +59,7 @@ class Cardioid:
     # Draw method.
     def draw(self):
         time = pg.time.get_ticks()
-        self.radius = 250 + 50 * abs(math.sin(time * 0.004) - 0.5)
-        factor = 1 + 0.001 * time
+        factor = 1 + 0.0001 * time
 
         # Draw the cardioid.
         for i in range(self.num_points):
