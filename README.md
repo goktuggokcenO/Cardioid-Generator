@@ -35,8 +35,6 @@ Open the app.
 Use the sliders to adjust the number of points, the multiplier, and other parameters.
 Watch the cardioid shape dynamically update.
 
-Save your creation or explore further!
-
 ## Contribution 🤝
 Feel free to contribute to this project by:
 
