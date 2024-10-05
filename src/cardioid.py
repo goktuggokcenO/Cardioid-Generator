@@ -15,12 +15,15 @@ class Cardioid:
             self.app.screen.get_height() // 2,
         )
         self.counter = 0
-        self.inc = 0.01
+        self.color_speed = 0.01
+        self.factor_change = 0.0001
 
     # Update settings based on slider values.
-    def update_settings(self, radius, num_points) -> None:
+    def update_settings(self, radius, num_points, color_speed, factor_change) -> None:
         self.radius = radius
         self.num_points = int(num_points)
+        self.color_speed = color_speed
+        self.factor_change = factor_change
 
     # Update window size and adjust cardioid position and radius.
     def update_window_size(self, width, height) -> None:
@@ -32,16 +35,16 @@ class Cardioid:
 
     # Get color method.
     def get_color(self) -> pg.Color:
-        self.counter += self.inc
+        self.counter += self.color_speed
         if not (0 < self.counter < 1):
             self.counter = max(min(self.counter, 1), 0)
-            self.inc *= -1
+            self.color_speed *= -1
         return pg.Color("red").lerp("green", self.counter)
 
     # Draw method.
     def draw(self) -> None:
         time = pg.time.get_ticks()
-        factor = 1 + 0.0001 * time
+        factor = 1 + self.factor_change * time
 
         # Draw the cardioid.
         for i in range(self.num_points):
