@@ -47,8 +47,9 @@ Feel free to contribute to this project by:
 This project is licensed under the MIT License.
 
 ## Screenshots 📸
-![Uploading 1.png…]()
-![Uploading Adsız.png…]()
+![1](https://github.com/user-attachments/assets/c11d8069-28b9-491a-b4e7-0e6272874502)
+![Adsız](https://github.com/user-attachments/assets/0f3aaf20-5a7c-45b4-b1ff-1cba69e246cb)
+
 
 ## Credits 💖
 Developed by Göktuğ Gökcen.
