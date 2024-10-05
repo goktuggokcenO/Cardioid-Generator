@@ -3,18 +3,107 @@ import pygame as pg
 import math
 
 
+# Slider class with labels and modern design.
+class Slider:
+    def __init__(self, x, y, width, min_val, max_val, start_val, label):
+        self.rect = pg.Rect(x, y, width, 20)  # Slider bar dimensions
+        self.min_val = min_val
+        self.max_val = max_val
+        self.val = start_val
+        self.grabbed = False
+        self.label = label
+        self.font = pg.font.SysFont(None, 24)  # Font for label
+
+    def draw(self, screen):
+        # Draw label on the left of the slider
+        label_surf = self.font.render(self.label, True, (255, 255, 255))
+        screen.blit(label_surf, (self.rect.x - 100, self.rect.y))
+
+        # Draw slider background (track)
+        pg.draw.rect(screen, (100, 100, 100), self.rect, border_radius=10)
+
+        # Calculate the position of the handle
+        pos = int(
+            (self.val - self.min_val) / (self.max_val - self.min_val) * self.rect.width
+        )
+
+        # Draw the slider filled area
+        pg.draw.rect(
+            screen,
+            (50, 205, 50),
+            (self.rect.x, self.rect.y, pos, self.rect.height),
+            border_radius=10,
+        )
+
+        # Draw the slider handle (circle)
+        handle_x = self.rect.x + pos
+        pg.draw.circle(
+            screen, (255, 255, 255), (handle_x, self.rect.y + self.rect.height // 2), 10
+        )
+
+    def handle_event(self, event):
+        # Handle slider interaction
+        if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
+            self.grabbed = True
+        elif event.type == pg.MOUSEBUTTONUP:
+            self.grabbed = False
+        elif event.type == pg.MOUSEMOTION and self.grabbed:
+            self.val = (event.pos[0] - self.rect.x) / self.rect.width * (
+                self.max_val - self.min_val
+            ) + self.min_val
+            self.val = max(self.min_val, min(self.val, self.max_val))
+
+
+# UI class to hold sliders.
+class UI:
+    def __init__(self, app):
+        self.app = app
+        # Sliders with labels
+        self.radius_slider = Slider(120, 20, 200, 100, 400, 250, "Radius")
+        self.points_slider = Slider(120, 60, 200, 50, 400, 200, "Points")
+
+    def draw(self):
+        self.radius_slider.draw(self.app.screen)
+        self.points_slider.draw(self.app.screen)
+
+    def handle_event(self, event):
+        self.radius_slider.handle_event(event)
+        self.points_slider.handle_event(event)
+
+
 # Application class.
 class App:
     # Constructor.
     def __init__(self):
-        self.screen = pg.display.set_mode((800, 600))
+        pg.font.init()
+        self.screen = pg.display.set_mode(
+            (800, 600), pg.RESIZABLE
+        )  # Initially windowed and resizable
+        self.fullscreen = False  # Track fullscreen state
         self.clock = pg.time.Clock()
         self.cardioid = Cardioid(self)
+        self.ui = UI(self)
+
+    # Toggle fullscreen method.
+    def toggle_fullscreen(self):
+        self.fullscreen = not self.fullscreen
+        if self.fullscreen:
+            # Enter fullscreen mode
+            self.screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
+        else:
+            # Return to windowed mode
+            self.screen = pg.display.set_mode((800, 600), pg.RESIZABLE)
+
+    # Handle window resize event.
+    def handle_resize(self, event):
+        self.screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
+        self.cardioid.update_window_size(event.w, event.h)
 
     # Draw method.
     def draw(self):
         self.screen.fill("black")
         self.cardioid.draw()
+        self.ui.draw()
         pg.display.flip()
 
     # Run method.
@@ -24,6 +113,15 @@ class App:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     running = False
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_f:  # Toggle fullscreen with 'F' key
+                        self.toggle_fullscreen()
+                elif event.type == pg.VIDEORESIZE:
+                    self.handle_resize(event)  # Handle window resizing
+                self.ui.handle_event(event)
+            self.cardioid.update_settings(
+                self.ui.radius_slider.val, self.ui.points_slider.val
+            )
             self.draw()
             self.clock.tick(60)
         pg.quit()
