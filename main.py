@@ -64,7 +64,6 @@ class Cardioid:
         # Draw the cardioid.
         for i in range(self.num_points):
             theta = (2 * math.pi / self.num_points) * i
-
             x1 = int(self.radius * math.cos(theta)) + self.translate[0]
             y1 = int(self.radius * math.sin(theta)) + self.translate[1]
             x2 = int(self.radius * math.cos(factor * theta)) + self.translate[0]
