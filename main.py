@@ -71,15 +71,16 @@ class UI:
         self.points_slider.handle_event(event)
 
 
-# Application class.
+# App class to hold the main loop and window.
 class App:
     # Constructor.
     def __init__(self):
+        # Initialize libraries.
         pg.font.init()
-        self.screen = pg.display.set_mode(
-            (800, 600), pg.RESIZABLE
-        )  # Initially windowed and resizable
-        self.fullscreen = False  # Track fullscreen state
+
+        # Initialize the application.
+        self.screen = pg.display.set_mode((800, 600), pg.RESIZABLE)
+        self.fullscreen = False
         self.clock = pg.time.Clock()
         self.cardioid = Cardioid(self)
         self.ui = UI(self)
