@@ -49,15 +49,29 @@ class Slider:
 
     # Handle slider interaction.
     def handle_event(self, event) -> None:
+        # Check if the mouse button is pressed down inside the slider area
         if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
             self.grabbed = True
-        elif event.type == pg.MOUSEBUTTONUP:
+
+        # Release the slider grab when the mouse button is released
+        if event.type == pg.MOUSEBUTTONUP:
             self.grabbed = False
-        elif event.type == pg.MOUSEMOTION and self.grabbed:
+
+        # Update the slider value if grabbed and the mouse is moving
+        if event.type == pg.MOUSEMOTION and self.grabbed:
+            # Directly check if the mouse button is still pressed during motion
+            if not pg.mouse.get_pressed()[0]:
+                self.grabbed = False
+                return
+            
+            # Calculate and lock the handle movement within the slider range
             self.val = (event.pos[0] - self.rect.x) / self.rect.width * (
                 self.max_val - self.min_val
             ) + self.min_val
+
+            # Clamp the value within the slider's range
             self.val = max(self.min_val, min(self.val, self.max_val))
+
 
 
 # Check if the file is run directly.
