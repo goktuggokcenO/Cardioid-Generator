@@ -7,7 +7,6 @@ Welcome to the Cardioid Generator! This application allows you to visualize and 
 **Interactive UI:** Easily generate cardioid curves with adjustable parameters.
 **Customizable:** Modify the number of points, radii, and multipliers to see how the curve changes.
 **Real-Time Visualization:** Watch the cardioid curve form as you adjust settings.
-
 **Resizable Window:** Drag from the edges to resize the app as needed.
 
 ## How It Works 💡
