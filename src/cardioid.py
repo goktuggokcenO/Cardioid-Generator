@@ -19,11 +19,10 @@ class Cardioid:
         self.factor_change = 0.0001
 
     # Update settings based on slider values.
-    def update_settings(self, radius, num_points, color_speed, factor_change) -> None:
+    def update_settings(self, radius, num_points, color_speed) -> None:
         self.radius = radius
         self.num_points = int(num_points)
         self.color_speed = color_speed
-        self.factor_change = factor_change
 
     # Update window size and adjust cardioid position and radius.
     def update_window_size(self, width, height) -> None:

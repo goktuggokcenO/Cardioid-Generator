@@ -44,7 +44,7 @@ class UI:
     def draw(self) -> None:
         self.radius_slider.draw(self.app.screen)
         self.points_slider.draw(self.app.screen)
-        self.color_slider.draw(self.app.scren)
+        self.color_slider.draw(self.app.screen)
 
     def handle_event(self, event) -> None:
         self.radius_slider.handle_event(event)

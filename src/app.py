@@ -44,7 +44,6 @@ class App:
                 radius=self.ui.radius_slider.val,
                 num_points=self.ui.points_slider.val,
                 color_speed=self.ui.color_slider.val,
-                factor_change=self.ui.factor_slider.val,
             )
 
             # Draw the window.
