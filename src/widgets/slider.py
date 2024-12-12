@@ -1,31 +1,39 @@
-# Libraries.
 import pygame as pg
 
 
-# Slider class to hold slider properties and design.
 class Slider:
-    # Constructor.
-    def __init__(self, x, y, width, min_val, max_val, start_val, label) -> None:
-        self.rect = pg.Rect(x, y, width, 20)
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        min_val: int,
+        max_val: int,
+        start_val: int,
+        label: str,
+        label_len: int = 100,
+    ) -> None:
+        self.x = x
+        self.y = y
+        self.rect = pg.Rect(x + label_len, y, width, 20)
         self.min_val = min_val
         self.max_val = max_val
         self.val = start_val
         self.grabbed = False
         self.label = label
-        self.font = pg.font.SysFont(None, 24)  # Font for label
+        self.font = pg.font.SysFont(None, 24)
 
-    # Draw method.
     def draw(self, screen) -> None:
         # Draw label on the left of the slider.
         label_slider = self.font.render(self.label, True, "white")
-        screen.blit(label_slider, (self.rect.x - 100, self.rect.y))
+        screen.blit(label_slider, (self.x, self.y))
 
-        # Draw slider background.
+        # Draw slider background
         pg.draw.rect(
             surface=screen, color=(100, 100, 100), rect=self.rect, border_radius=10
         )
 
-        # Calculate the position of the handle.
+        # Calculate the position of the handle
         handle_pos = int(
             (self.val - self.min_val) / (self.max_val - self.min_val) * self.rect.width
         )
@@ -47,7 +55,6 @@ class Slider:
             radius=10,
         )
 
-    # Handle slider interaction.
     def handle_event(self, event) -> None:
         # Check if the mouse button is pressed down inside the slider area
         if event.type == pg.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos):
@@ -63,7 +70,7 @@ class Slider:
             if not pg.mouse.get_pressed()[0]:
                 self.grabbed = False
                 return
-            
+
             # Calculate and lock the handle movement within the slider range
             self.val = (event.pos[0] - self.rect.x) / self.rect.width * (
                 self.max_val - self.min_val
@@ -73,7 +80,5 @@ class Slider:
             self.val = max(self.min_val, min(self.val, self.max_val))
 
 
-
-# Check if the file is run directly.
 if __name__ == "__main__":
     print("You can't run this file directly.")
