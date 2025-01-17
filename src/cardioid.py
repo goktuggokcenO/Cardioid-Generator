@@ -1,11 +1,8 @@
-# Libraries.
 import pygame as pg
 import math
 
 
-# Cardioid class.
 class Cardioid:
-    # Constructor.
     def __init__(self, app) -> None:
         self.app = app
         self.radius = 250
@@ -32,7 +29,6 @@ class Cardioid:
         # Adjust the radius based on the smaller dimension (width or height)
         self.radius = min(width, height) // 2 - 50
 
-    # Get color method.
     def get_color(self) -> pg.Color:
         self.counter += self.color_speed
         if not (0 < self.counter < 1):
@@ -40,7 +36,6 @@ class Cardioid:
             self.color_speed *= -1
         return pg.Color("red").lerp("green", self.counter)
 
-    # Draw method.
     def draw(self) -> None:
         time = pg.time.get_ticks()
         factor = 1 + self.factor_change * time
@@ -55,6 +50,5 @@ class Cardioid:
             pg.draw.line(self.app.screen, self.get_color(), (x1, y1), (x2, y2))
 
 
-# Check if the file is run directly.
 if __name__ == "__main__":
     print("You can't run this file directly.")
