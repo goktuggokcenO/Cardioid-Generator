@@ -1,7 +1,5 @@
-# Libraries.
 from src.app import App
 
-# Check if the file is being run directly.
 if __name__ == "__main__":
+    # Create the app.
     app = App()
-    app.run()

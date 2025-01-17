@@ -12,6 +12,7 @@ class App:
         self.clock = pg.time.Clock()
         self.cardioid = Cardioid(self)
         self.ui = UI(self)
+        self.run()
 
     def handle_resize(self, event) -> None:
         self.screen = pg.display.set_mode((event.w, event.h), pg.RESIZABLE)
