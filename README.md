@@ -37,9 +37,7 @@ python main.py
 
 ## Usage 🖱️
 
-Open the app.
-Use the sliders to adjust the number of points, the multiplier, and other parameters.
-Watch the cardioid shape dynamically update.
+Open the app. Use the sliders to adjust the number of points, the multiplier, and other parameters. Watch the cardioid shape dynamically update.
 
 ## Contribution 🤝
 
